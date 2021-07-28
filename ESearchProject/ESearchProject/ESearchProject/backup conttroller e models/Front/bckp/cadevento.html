@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>Cadastro de Evento</title>
+ 
+    <style>
+            body{
+                padding: 1rem;
+                margin: 1rem 1rem 1rem 1rem;
+                background-color: whitesmoke;
+                text-align: center;
+                color: whitesmoke;
+            }
+            h1{
+        color: black;
+    }
+            
+        </style>
+
+</head>
+  
+  <body onload="carrega();">
+        <!-- <body background="bgimage.jpg"> -->
+    <h1>Cadastro de Evento</h1>
+
+    <!-- Inicio do container-fluid -->
+    <div class="container-fluid">
+        <!-- inicio do formulario -->
+
+
+
+        <form onsubmit="return false;">
+            <div class="form-group">
+              <label for="Name">Nome do Evento</label>
+              <input type="text" class="form-control" id="Name" placeholder="Nome do Evento">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+            <div class="form-group">
+              <label for="Address">Address</label>
+              <input type="text" class="form-control" id="Address" placeholder="Cep,rua">
+            </div>
+            <div class="form-group">
+                <label for="Lat">lat da Ru</label>
+                <input type="text" class="form-control" id="Lat" placeholder="lat">
+              </div>
+              <div class="form-group">
+                <label for="Lng">long do Local</label>
+                <input type="text" class="form-control" id="Lng" placeholder="longi">
+              </div>
+
+              <div class="form-group">
+                <label for="Type">Data do Evento</label>
+                <input type="text" class="form-control" id="Type" placeholder="Descrição">
+              </div>
+
+              <!-- <div class="form-group">
+                <label for="Inicio">Hora de Inicio</label>
+                <input type="text" class="form-control" id="Inicio" placeholder="19:00">
+              </div>
+
+              <div class="form-group">
+                <label for="Final">Hora de término</label>
+                <input type="text" class="form-control" id="Final" placeholder="22:00">
+              </div>
+              <div class="form-group">
+                <label for="Preco">Preço</label>
+                <input type="text" class="form-control" id="Preco" placeholder="Coloque 0 se for franca">
+              </div>
+               -->
+            <!-- Inicio do  form-group -->
+
+            <!-- <div class="form-group">
+                    <label for="IdUsuario">Selecione um Usuário</label>
+                    <select class="form-control" id="IdUsuario">
+                      
+                    </select>
+                  </div> -->
+
+            <!-- Fim do form-group -->
+            
+
+          <!-- Inicio do  form-group -->
+
+
+          <!-- <div class="form-group">
+                <label for="IdContato">Selecione um contato</label>
+                <select class="form-control" id="IdContato">
+                  
+                </select>
+              </div> -->
+
+
+        <!-- Fim do form-group -->
+
+        <button type="submit" class="btn btn-primary" onclick="cadastrar();">Enviar</button>
+          </form>
+         
+
+
+
+
+        <!-- fim do formulario -->
+      </div>
+
+      <!-- fim do container-fluid -->
+
+
+
+      <!-- script para acesso a api -->
+      <script type="text/javascript">
+        function cadastrar(){
+            var url = "http://localhost:5000/api/markers";
+            //vamos pegar os dados do evento
+            var name = document.getElementById("Name").value;
+            var address = document.getElementById("Address").value;
+            var lat = document.getElementById("Lat").value;
+            var lng = document.getElementById("Lng").value;
+            // var data = document.getElementById("Data").value;
+            var type = document.getElementById("Type").value;
+            // var final = document.getElementById("Final").value;
+            // var preco = document.getElementById("Preco").value;
+           
+            //vamos "casar" os campos da api com os valores do formulario
+            var dados = {};
+            dados.name = name; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+            dados.address = address;
+            dados.lat = lat;
+            dados.lng = lng;
+            dados.type = type;
+            // dados.inicio = inicio;
+            // dados.final= final;
+            // dados.preco = preco;
+            
+            //abaixo iremos passar para o formato de JSON
+            var json = JSON.stringify(dados);
+
+            //document.getelement é para utilizar um dados pelo ID
+
+            //vamos fazer uma instancia do obj XMLHttpRequest
+
+            var xhr = new XMLHttpRequest();
+
+            /*
+            vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+            */
+            xhr.open("POST",url,true);
+
+            //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+            
+            xhr.setRequestHeader("Content-type","application/json;charset=utf-8"); //como o dados é interpretado para a api/postman
+
+            xhr.onload = function (){
+                if(xhr.status >= 200 && xhr.status < 400){
+                    alert("Dados cadastrados");
+                    console.log(xhr);
+                }
+                else{
+                    alert("Erro ao tentar cadastrar");
+                }
+            }
+            xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+
+        }
+    </script>
+
+
+
+
+
+    <!-- fim do script de cadastro -->
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

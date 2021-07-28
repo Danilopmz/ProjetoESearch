@@ -1,0 +1,209 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+      
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="../Front/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../Front/css/product.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+
+    <!-- <img src="../Front/img/rockinriowallp.jpg" class="img-fluid" alt="Responsive image" > -->
+    <title>Eventos Disponíveis</title>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    
+    <style>
+    p{
+      color: whitesmoke;
+      font-size: 5px;
+    }
+    h2{
+      color:black;
+      
+    }
+    
+    </style>
+
+
+</head>
+  
+  <body onload="logar();" >
+        <nav class="site-header sticky-top py-1">
+                <div class="container d-flex flex-column flex-md-row justify-content-between">
+                  
+                  <a class="py-2 d-none d-md-inline-block" href="../Front/index.html">Home</a>
+                  <a class="py-2 d-none d-md-inline-block" href="sobre.html">Sobre Nós</a>
+                  
+                  
+                </div>
+              </nav>
+          
+              <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+                <div class="col-md-5 p-lg-5 mx-auto my-5">
+                      <img class="mb-4" src="../Front/img/logoesearch.png" alt="" width="295" height="180">
+                  
+                  <p class="lead font-weight-normal">Página de Eventos</p>
+                  <hr>
+                  <a class="btn btn-outline-secondary" href="cadevento.html?inf="+tokenUS.accessToken>Cadastre seu Evento!</a>
+                </div>
+              
+    
+
+    <!-- Inicio do container-fluid -->
+    
+        <div id="conteudo">
+
+        </div>
+
+
+      <!-- fim do container-fluid -->
+      
+      
+
+      
+
+      <!-- script para acesso a api -->
+      <script type="text/javascript">
+
+        var xhr = new XMLHttpRequest(); /*requisição para o HTML*/
+        var url = "http://localhost:5000/api/markers"; /*utilizar a url*/    
+          //vamos pegar a parte final da url a partir do ponto de interrogacao
+          // que no javascript é chamado de search;
+          var caminho = window.location.search;
+          caminho = caminho.substring(5,caminho.length);  
+          console.log(caminho);
+          xhr.open("GET",url,true);             /* abrir e pegar pela url*/
+          xhr.setRequestHeader("Authorization","Bearer "+caminho); /* irá necessitar da autorizacao para visualizar*/
+          
+           xhr.onload=function()
+          {
+            var json = JSON.parse(this.response); /* criar var json e pede para responder */
+                    if(xhr.status >= 200 && xhr.status < 400)
+                    {
+                        json.forEach(dados => {
+                             
+var estrutura ="";
+
+//div
+estrutura+="<div class=\"bg-primary mr-md-2 pt-3 px-1 pt-md-5 px-md-5 text-center text-white overflow-hidden\">";
+estrutura+="<div class=\"my-1 py-1\">";
+estrutura+=" <h2 class=\"display-4\">"+dados.name+"</h2>";
+
+estrutura+="<p class=\"lead\">Endereço: "+dados.address+", "+dados.rua+"</p>";
+estrutura+="<p class=\"lead\">Data e Horário: "+dados.data+" Inicio: "+dados.inicio+" Termino: "+dados.termino+"</p>";
+estrutura+="<p class=\"lead\">Descrição: "+dados.type+"</p>";
+estrutura+="<p class=\"lead\">Preço: *"+dados.preco+"*"+"</p>";
+estrutura +="<p class=\"lead\">Localização no Google Maps: ";
+var mapa = "";
+mapa+="<p class=\"lead\"><iframe width=\"600\" height=\"440\" frameborder=\"0\" style=\"border:0\" src=\"https://www.google.com/maps/embed/v1/place?q=ende&key=AIzaSyBl_tXWDSYK1h57AitbOXOP_9K0Q7gIcW8\" allowfullscreen></iframe></p>"
+; //fechar o iframe
+
+
+
+resultado = mapa.replace("ende",dados.address+" "+dados.rua);
+
+
+   
+estrutura+= ""+resultado; 
+
+                            // alert(resultado);
+                            
+                            
+                            document.getElementById("conteudo").innerHTML +=estrutura;
+                                
+                                 //pede a div "conteudo" no html
+                            });                          
+                    }    
+                    else{
+                    alert("Você não esta Logado!")
+                        }  
+          }                    
+          xhr.send();  
+          
+        
+          </script>  
+
+<script type="text/javascript">
+  function logar(){
+      var url = "http://localhost:5000/api/login";
+      //vamos pegar os dados do usuario
+      var usuario = document.getElementById("usuario").value;
+      var senha = document.getElementById("senha").value;
+     
+      //vamos "casar" os campos da api com os valores do formulario
+      var dados = {};
+      dados.nomeUsuario = usuario; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+      dados.senha = senha;
+      
+      
+      //abaixo iremos passar para o formato de JSON
+      var json = JSON.stringify(dados);
+
+      //document.getelement é para utilizar um dados pelo ID
+
+      //vamos fazer uma instancia do obj XMLHttpRequest
+
+      var xhr = new XMLHttpRequest();
+
+      /*
+      vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+      */
+      xhr.open("POST",url,true);
+
+      //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+      
+      xhr.setRequestHeader("Content-type","application/json;charset=utf-8"); //como o dados é interpretado para a api/postman
+
+      xhr.onload = function (){
+          if(xhr.status >= 200 && xhr.status < 400){
+              alert("Login feito com sucesso");
+              console.log(xhr);
+              
+                  //vamos capturar o token gerado
+          var tokenUS = JSON.parse(this.response);
+          // console.log(tokenUS.accessToken);
+
+          //REDIRECIONAR PARA A PAGINA LISTAR
+          window.location.replace("listarevento.html?inf="+tokenUS.accessToken);
+          
+              
+          }
+          else{
+              alert("Usuário ou senha incorretos");
+              
+          }
+
+      
+
+      }
+      
+      xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+
+  }
+</script>
+          
+                 
+                       
+
+        <!-- fim do acesso para a api -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  </body>
+</html>
+

@@ -1,0 +1,125 @@
+ <script type="text/javascript">
+
+        var idUsuario = 0;
+        var idContato = 0;
+
+        function cadastrar() {
+            contato();
+            usuario();
+            cliente();
+
+        }
+        function contato() {
+            var url = "http://localhost:5000/api/Contato"
+            //vamos pegar os dados do form 
+            var telefone = document.getElementById("telefone").value;
+            var celular = document.getElementById("celular").value;
+            var email = document.getElementById("email").value;
+
+            /* vamos casar os campos da api com os valores do formulario*/
+            var dados = {};
+            dados.telefone = telefone;
+            dados.celular = celular;
+            dados.email = email;
+            //abaixo passaremos para o formato de JSON
+            var contato = JSON.stringify(dados);
+
+            //faremos uma instância do objeto XMLHTTPREQUEST
+            var xhrContato = new XMLHttpRequest();
+            //Exporemos a url com o comando open e passar o verbo do res(POST), a url da api e se aceita retorno ou nâo(true)
+            xhrContato.open("POST", url, true);
+            //vamos dizer como sera passagem de dados a api. neste caso usaremos json
+            xhrContato.setRequestHeader("Content-type", "application/json;charset=utf-8");
+
+            xhrContato.onload = function () {
+                var rs = JSON.parse(this.response);
+
+                if (xhrContato.status >= 200 && xhrContato.status < 400) {
+                    idContato = rs.id;
+                }
+                else {
+                    alert("ERRO AO TENTAR CADASTRAR!!!");
+                }
+            }
+            xhrContato.send(contato);
+        }
+        function usuario() {
+            var url = "http://localhost:5000/api/Usuario"
+            //vamos pegar os dados do form 
+            var usuario = document.getElementById("txtusuario").value;
+            var senha = document.getElementById("senha").value;
+            var nivel = document.getElementById("nivel").value;
+
+            /* vamos casar os campos da api com os valores do formulario*/
+            var dados = {};
+            dados.nomeUsuario = usuario;
+            dados.senha = senha;
+            dados.nivel = nivel;
+            //abaixo passaremos para o formato de JSON
+            var user = JSON.stringify(dados);
+
+            //faremos uma instância do objeto XMLHTTPREQUEST
+            var xhrUsuario = new XMLHttpRequest();
+            //Exporemos a url com o comando open e passar o verbo do res(POST), a url da api e se aceita retorno ou nâo(true)
+            xhrUsuario.open("POST", url, true);
+            //vamos dizer como sera passagem de dados a api. neste caso usaremos json
+            xhrUsuario.setRequestHeader("Content-type", "application/json;charset=utf-8");
+
+            xhrUsuario.onload = function () {
+
+                var rs = JSON.parse(this.response);
+                if (xhrUsuario.status >= 200 && xhrUsuario.status < 400) {
+
+                    idUsuario = rs.id;
+                }
+                else {
+                    alert("ERRO AO TENTAR CADASTRAR!!!");
+                }
+            }
+            xhrUsuario.send(user);
+        }
+        function cliente() {
+            var url = "http://localhost:5000/api/cliente";
+            //vamos pegar os dados do usuario
+            var nome = document.getElementById("NomeCliente").value;
+            var cpf = document.getElementById("CPF").value;
+
+            //vamos "casar" os campos da api com os valores do formulario
+            var dados = {};
+            dados.nomeCliente = nome; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+            dados.cpf = cpf;
+            dados.idUsuario = idUsuario;
+            dados.idContato = idContato;
+
+            //abaixo iremos passar para o formato de JSON
+            var json = JSON.stringify(dados);
+
+            //document.getelement é para utilizar um dados pelo ID
+
+            //vamos fazer uma instancia do obj XMLHttpRequest
+
+            var xhr = new XMLHttpRequest();
+
+            /*
+            vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+            */
+            xhr.open("POST", url, true);
+
+            //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+
+            xhr.setRequestHeader("Content-type", "application/json;charset=utf-8"); //como o dados é interpretado para a api/postman
+
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    alert("Dados cadastrados");
+                    console.log(xhr);
+                }
+                else {
+                    alert("Erro ao tentar cadastrar");
+                }
+            }
+            xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+
+        }
+
+    </script>

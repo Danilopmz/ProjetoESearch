@@ -1,0 +1,116 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+      
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>Eventos Disponíveis</title>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    
+    <style>
+            body{
+                padding: 1rem;
+                margin: 1rem 1rem 1rem 1rem;
+                background-color: white;
+                text-align: center;
+                color: black;
+            }
+            conteudo{
+                color: blue;
+            }
+            
+        </style>
+
+</head>
+  
+  <body onload="initialize()" >
+        <!-- <body background="bgimage.jpg"> -->
+
+    <img src="../Front/img/logoesearch.png" height="106" width="177" >
+    <h1>Bem vindo há página de Eventos</h1>
+    <hr>
+    
+
+    <!-- Inicio do container-fluid -->
+    <div class="container-fluid">
+    
+        <div id="conteudo">
+
+        </div>
+
+      </div>
+
+      <!-- fim do container-fluid -->
+
+
+      <!-- script para acesso a api -->
+      <script type="text/javascript">
+      
+        var xhr = new XMLHttpRequest(); /*requisição para o HTML*/
+        var url = "http://localhost:5000/api/evento"; /*utilizar a url*/    
+          //vamos pegar a parte final da url a partir do ponto de interrogacao
+          // que no javascript é chamado de search;
+          var caminho = window.location.search;
+          caminho = caminho.substring(5,caminho.length);  
+          console.log(caminho);
+          xhr.open("GET",url,true);             /* abrir e pegar pela url*/
+          xhr.setRequestHeader("Authorization","Bearer "+caminho); /* irá necessitar da autorizacao para visualizar*/
+
+           xhr.onload=function()
+          {
+            var json = JSON.parse(this.response); /* criar var json e pede para responder */
+                    if(xhr.status >= 200 && xhr.status < 400)
+                    {
+                        json.forEach(dados => {
+                                
+                            var estrutura = "<h3>Nome: "+dados.nomeEvento+"</h3>"; // criar variavel estrutura h3 com dados + nome do cliente
+                            estrutura +="<hr>";
+                            estrutura +="CEP: "+ dados.cep; // dados com o CEP
+                            // estrutura +="<br>Data de Cadastros: "+dados.dataCadastro; //quebra linha
+                            estrutura +="<br>"; //quebra a linha
+                            estrutura +="Local: "+ dados.rua;
+                            estrutura +="<br>";
+                            estrutura +="Numero: "+ dados.numerolocal;
+                            estrutura +="<br>";
+                            estrutura +="Data de Inicio: "+ dados.data;
+                            estrutura +="<br>";
+                            estrutura +="Inicio: "+ dados.inicio;
+                            estrutura +="<br>";
+                            estrutura +="Termino: "+ dados.final;
+                            estrutura +="<br>";
+                            estrutura +="Preço: "+ dados.preco;[]
+                            estrutura +="<br>";
+                            estrutura +="<h1> Mapa </h1> <br> ";
+                            estrutura +="<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3661.498504557988!2d-46.41664378447406!3d-23.406352861772522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce89bb415b26b9%3A0xbfff5beb5ffc4482!2sBonsucesso%2C+Guarulhos+-+SP%2C+07179-240!5e0!3m2!1spt-BR!2sbr!4v1543691480216\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" allowfullscreen></iframe>";
+                    
+                                document.getElementById("conteudo").innerHTML+=estrutura;
+                                
+                                 //pede a div "conteudo" no html
+                            });                          
+                    }    
+                    else{
+                    console.log("Erro de Autorização e|ou Exibição de dados")
+                        }  
+          }                    
+          xhr.send();         
+          </script>                   
+            <a href="../Front/cadevento.html">Cadastre seu Evento</a>            
+
+        <!-- fim do acesso para a api -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>setTimeout(function(){codeAddress()},1000);</script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  </body>
+</html>
+

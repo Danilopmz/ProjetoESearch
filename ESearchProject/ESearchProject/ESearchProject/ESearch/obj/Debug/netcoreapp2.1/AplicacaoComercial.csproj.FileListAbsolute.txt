@@ -1,0 +1,14 @@
+/home/edilson/Documents/DotNet/AplicacaoComercial/bin/Debug/netcoreapp2.1/AplicacaoComercial.deps.json
+/home/edilson/Documents/DotNet/AplicacaoComercial/bin/Debug/netcoreapp2.1/AplicacaoComercial.runtimeconfig.json
+/home/edilson/Documents/DotNet/AplicacaoComercial/bin/Debug/netcoreapp2.1/AplicacaoComercial.runtimeconfig.dev.json
+/home/edilson/Documents/DotNet/AplicacaoComercial/bin/Debug/netcoreapp2.1/AplicacaoComercial.dll
+/home/edilson/Documents/DotNet/AplicacaoComercial/bin/Debug/netcoreapp2.1/AplicacaoComercial.pdb
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.csprojAssemblyReference.cache
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.csproj.CoreCompileInputs.cache
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.RazorAssemblyInfo.cache
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.RazorAssemblyInfo.cs
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.AssemblyInfoInputs.cache
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.AssemblyInfo.cs
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.RazorTargetAssemblyInfo.cache
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.dll
+/home/edilson/Documents/DotNet/AplicacaoComercial/obj/Debug/netcoreapp2.1/AplicacaoComercial.pdb

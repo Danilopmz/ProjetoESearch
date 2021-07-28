@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../Front/css/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="../Front/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../Front/css/product.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+
+    <title>Checkout example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../Front/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+  <nav class="site-header sticky-top py-1">
+      <div class="container d-flex flex-column flex-md-row justify-content-between">       
+        <a class="py-2 d-none d-md-inline-block" href="../Front/index.html">Home</a>
+        <a class="py-2 d-none d-md-inline-block" href="login.html">Login</a>     
+        <a class="py-2 d-none d-md-inline-block" href="javascript:history.back()">Voltar</a>            
+      </div>
+    </nav>
+   
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-left">
+        <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h2>Formulário para Cadastro de Evento</h2>
+        <!-- <p class="lead">ESearch tem como o principal objetivo realizar a divulgação de Eventos na Cidade de São Paulo gratuitamente.</p> -->
+        <hr>
+      </div>
+    
+
+      
+        <div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Cadastre seu Evento!</h4>
+          <div class="container-fluid">
+          <form onsubmit="return false;">
+              <div class="mb-3">
+                  <label for="Name">Nome do Evento <span class="text-muted">(Obrigatório)</span></label>
+                  <input type="text" class="form-control" id="Name" placeholder="Teatro Vila Maria">
+                  <div class="invalid-feedback">
+                  
+                  </div>
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="Address">CEP <span class="text-muted">(Obrigatório)</span></label>
+                  <input type="email" class="form-control" id="Address" placeholder="08121008">
+                  <div class="invalid-feedback">
+                  </div>
+                </div>                
+
+                <div class="mb-3">
+                    <label for="Rua">Rua e Nª<span class="text-muted">(Obrigatório)</span></label>
+                    <input type="text" class="form-control" id="Rua" placeholder="Rua Carlos Alberto Lopes, 81">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+
+                <div class="mb-3">
+                  <label for="Data">Data do Evento <span class="text-muted">(Obrigatório)</span></label>
+                  <input type="date" class="form-control" id="Data" placeholder="Data em formato 00/00/0000">
+                  <div class="invalid-feedback">
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Inicio">Inicio <span class="text-muted">(Obrigatório)</span></label>
+                    <input type="time" class="form-control" id="Inicio" placeholder="Horário de Inicio">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                      <label for="Termino">Termino <span class="text-muted">(Obrigatório)</span></label>
+                      <input type="time" class="form-control" id="Termino" placeholder="Horário de Termino">
+                      <div class="invalid-feedback">
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Descricao">Descrição <span class="text-muted">(Obrigatório)</span></label>
+                        <input type="text" class="form-control" id="Descricao" placeholder="Escreva uma descrição, por exemplo: restrição, informação e etc">
+                        <div class="invalid-feedback">
+                        </div>
+                      </div>
+
+
+                <div class="mb-3">
+                    <label for="Preco">Preço <span class="text-muted">(Obrigatório)</span></label>
+                    <input type="text" class="form-control" id="Preco" placeholder="Ex: R$20 ou Gratuito ">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+                        
+                        
+                        
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="cadastrar();">Cadastrar-se</button>
+              </form>
+
+              <script type="text/javascript">
+                function cadastrar(){
+                    var url = "http://localhost:5000/api/markers";
+                    //vamos pegar os dados do evento
+                    var name = document.getElementById("Name").value;
+                    var address = document.getElementById("Address").value;
+                    var rua = document.getElementById("Rua").value;
+                    var data = document.getElementById("Data").value;
+                    var inicio = document.getElementById("Inicio").value;
+                    var termino = document.getElementById("Termino").value;
+                    var desc = document.getElementById("Descricao").value;
+                    var preco = document.getElementById("Preco").value;
+                   
+                    //vamos "casar" os campos da api com os valores do formulario
+                    var dados = {};
+                    dados.name = name; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+                    dados.address = address;
+                    dados.rua = rua;
+                    dados.data = data;
+                    dados.inicio = inicio;
+                    dados.termino = termino;
+                    dados.type = desc;
+                    dados.preco = preco;
+                    
+                    //abaixo iremos passar para o formato de JSON
+                    var json = JSON.stringify(dados);
+        
+                    //document.getelement é para utilizar um dados pelo ID
+        
+                    //vamos fazer uma instancia do obj XMLHttpRequest
+        
+                    var xhr = new XMLHttpRequest();
+        
+                    /*
+                    vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+                    */
+                    xhr.open("POST",url,true);
+        
+                    //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+                    
+                    xhr.setRequestHeader("Content-type","application/json;charset=utf-8");  //como o dados é interpretado para a api/postman
+                    
+                    xhr.onload = function (){
+                        if(xhr.status >= 200 && xhr.status < 400){
+                            alert("Evento Cadastrado com Sucesso, Retornando para página de Eventos");
+                            history.back();
+                            console.log(xhr);
+                            
+
+                        }
+                        else{
+                            alert("Erro ao tentar cadastrar seu Evento");
+                        }
+                    }
+                    xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+        
+                }
+            </script>
+        
+
+
+
+              
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+          <p class="mb-1">&copy; 2017-2018 Senac Tat</p>   
+        </footer>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+      <script src="../../assets/js/vendor/popper.min.js"></script>
+      <script src="../../dist/js/bootstrap.min.js"></script>
+      <script src="../../assets/js/vendor/holder.min.js"></script>
+      
+    </body>
+  </html>
+  

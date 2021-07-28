@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+
+
+
+  <script type="text/javascript">
+      
+    var xhr = new XMLHttpRequest(); /*requisição para o HTML*/
+    var url = "http://localhost:5000/api/markers"; /*utilizar a url*/    
+      //vamos pegar a parte final da url a partir do ponto de interrogacao
+      // que no javascript é chamado de search;
+      var caminho = window.location.search;
+      caminho = caminho.substring(5,caminho.length);  
+      console.log(caminho);
+      xhr.open("GET",url,true);             /* abrir e pegar pela url*/
+      xhr.setRequestHeader("Authorization","Bearer "+caminho); /* irá necessitar da autorizacao para visualizar*/
+
+       xhr.onload=function()
+      {
+        var json = JSON.parse(this.response); /* criar var json e pede para responder */
+                if(xhr.status >= 200 && xhr.status < 400)
+                {
+                    json.forEach(dados => {
+                            
+                        var estrutura = "<h3>Nome: "+dados.name+"</h3>"; // criar variavel estrutura h3 com dados + nome do cliente
+                        estrutura +="<hr>";
+                        // estrutura +="CEP: "+ dados.cep; // dados com o CEP
+                        // // estrutura +="<br>Data de Cadastros: "+dados.dataCadastro; //quebra linha
+                        // estrutura +="<br>"; //quebra a linha
+                        // estrutura +="Local: "+ dados.rua;
+                        // estrutura +="<br>";
+                        // estrutura +="Numero: "+ dados.numerolocal;
+                        // estrutura +="<br>";
+                        // estrutura +="Data de Inicio: "+ dados.data;
+                        // estrutura +="<br>";
+                        // estrutura +="Inicio: "+ dados.inicio;
+                        // estrutura +="<br>";
+                        estrutura +="Endereço: "+ dados.address;
+                        estrutura +="<br>";
+                        estrutura +="Desc: "+ dados.type;[]
+                        estrutura +="<br>";
+                        estrutura +="<h1> Mapa </h1> <br> ";
+                        estrutura +="<iframe width=\"640\" height=\"480\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\" src=\"https://maps.google.it/maps?q=<?php echo $address; ?>&output=embed\"></iframe>";
+                
+                            document.getElementById("conteudo").innerHTML+=estrutura;
+                            
+                             //pede a div "conteudo" no html
+                        });                          
+                }    
+                else{
+                console.log("Erro de Autorização e|ou Exibição de dados")
+                    }  
+      }                    
+      xhr.send();         
+      </script> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  
+</body>
+</html>

@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        ESearch Project
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <h1>Página de Login</h1>
+  
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Usuário</ion-label>
+        <ion-input type="text" name="nomeUsuario" [(ngModel)]="model.nomeUsuario"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label stacked>Senha</ion-label>
+        <ion-input type="password" name="senha" [(ngModel)]="model.senha"></ion-input>
+      </ion-item>
+    </ion-list>
+  
+    <button ion-button block (click)="login()" color="primary">Logar</button>
+
+  
+  </ion-content>

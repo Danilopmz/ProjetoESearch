@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../Front/css/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="../Front/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../Front/css/product.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+
+    <title>Checkout example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../Front/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+  <nav class="site-header sticky-top py-1">
+      <div class="container d-flex flex-column flex-md-row justify-content-between">       
+        <a class="py-2 d-none d-md-inline-block" href="../Front/index.html">Home</a>
+        <a class="py-2 d-none d-md-inline-block" href="login.html">Login</a>               
+      </div>
+    </nav>
+   
+  <body class="bg-light">
+
+    <div class="container">
+      <div class="py-5 text-left">
+        <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h2>Formulário para Cadastro</h2>
+        <!-- <p class="lead">ESearch tem como o principal objetivo realizar a divulgação de Eventos na Cidade de São Paulo gratuitamente.</p> -->
+        <hr>
+      </div>
+    
+
+      
+        <div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Faça seu Cadastro!</h4>
+          <div class="container-fluid">
+          <form onsubmit="return false;">
+              <div class="mb-3">
+                  <label for="NomeCliente">Nome Completo <span class="text-muted">(Obrigatório)</span></label>
+                  <input type="text" class="form-control" id="NomeCliente" placeholder="Ex: Rafael Andrade">
+                  <div class="invalid-feedback">
+                    Seu nome completo
+                  </div>
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="Email">Email <span class="text-muted">(Obrigatório)</span></label>
+                  <input type="email" class="form-control" id="Email" placeholder="Ex: email@examplo.com">
+                  <div class="invalid-feedback">
+                  </div>
+                </div>                
+
+                <div class="mb-3">
+                    <label for="CPF">CPF <span class="text-muted">(Obrigatório)</span></label>
+                    <input type="text" class="form-control" id="CPF" placeholder="Ex: 123.456.789.01">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+
+                <div class="mb-3">
+                  <label for="NomeUsuario">Usuário <span class="text-muted">(Obrigatório)</span></label>
+                  <input type="text" class="form-control" id="NomeUsuario" placeholder="">
+                  <div class="invalid-feedback">
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Senha">Senha <span class="text-muted">(Obrigatório)</span></label>
+                    <input type="password" class="form-control" id="Senha" placeholder="">
+                    <div class="invalid-feedback">
+                    </div>
+                  </div>
+
+                <div class="mb-3">
+                    <label for="Nivel">Nivel <span class="text-muted">(Obrigatório)</span></label>  
+                    <select class="form-control" id="Nivel">
+                        <option value="Cliente">Cliente</option>                     
+                      </select>
+                    <div class="invalid-feedback">
+                        
+                        
+                        
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="cadastrar();">Cadastrar-se</button>
+              </form>
+
+                
+ <!-- Incio do script para cadastro do usuario  -->
+
+ <script type="text/javascript">
+  function cadastrar(){
+      var url = "http://localhost:5000/api/usuario";
+      //vamos pegar os dados do usuario
+      var nomeCliente = document.getElementById("NomeCliente").value;
+      var email = document.getElementById("Email").value;
+      var CPF = document.getElementById("CPF").value;
+      var nomeUsuario = document.getElementById("NomeUsuario").value;
+      var senha = document.getElementById("Senha").value;
+      var nivel = document.getElementById("Nivel").value;
+
+      //vamos "casar" os campos da api com os valores do formulario
+      var dados = {};
+      dados.nomeCliente = nomeCliente; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+      dados.email = email;
+      dados.cpf = CPF;
+      dados.nomeUsuario = nomeUsuario;
+      dados.senha = senha;
+      dados.nivel = nivel;
+
+      
+      //abaixo iremos passar para o formato de JSON
+      var json = JSON.stringify(dados);
+
+      //document.getelement é para utilizar um dados pelo ID
+
+      //vamos fazer uma instancia do obj XMLHttpRequest
+
+      var xhr = new XMLHttpRequest();
+
+      /*
+      vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+      */
+      xhr.open("POST",url,true);
+
+      //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+      
+      xhr.setRequestHeader("Content-type","application/json;charset=utf-8"); //como o dados é interpretado para a api/postman
+
+      xhr.onload = function (){
+          if(xhr.status >= 200 && xhr.status < 400){
+              alert("Dados cadastrados");
+              console.log(xhr);
+
+          }
+          else{
+              alert("Erro ao tentar cadastrar");
+          }
+      }
+      xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+
+  }
+</script>
+
+
+
+
+
+<!-- fim do script de cadastro -->
+
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2017-2018 Senac Tat</p>   
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    
+  </body>
+</html>

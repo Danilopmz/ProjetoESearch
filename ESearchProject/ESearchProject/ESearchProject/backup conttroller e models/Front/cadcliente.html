@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>Cadastro de Cliente</title>
+ 
+    <style>
+            body{
+                padding: 1rem;
+                margin: 1rem 1rem 1rem 1rem;
+                background-color: black;
+                text-align: center;
+                color: whitesmoke;
+            }
+        </style>
+
+</head>
+  
+  <body onload="carrega();">
+        <!-- <body background="bgimage.jpg"> -->
+    <h1>Cadastro de Cliente</h1>
+
+    <!-- Inicio do container-fluid -->
+    <div class="container-fluid">
+        <!-- inicio do formulario -->
+
+
+
+        <form onsubmit="return false;">
+            <div class="form-group">
+              <label for="NomeCliente">Nome do Cliente</label>
+              <input type="text" class="form-control" id="NomeCliente" placeholder="Nome Completo">
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+            <div class="form-group">
+              <label for="CPF">CPF</label>
+              <input type="text" class="form-control" id="CPF" placeholder="xxx.xxx.xxx-xx">
+            </div>
+
+            <!-- Inicio do  form-group -->
+            <div class="form-group">
+                    <label for="IdUsuario">Selecione um Usuário</label>
+                    <select class="form-control" id="IdUsuario">
+                      
+                    </select>
+                  </div>
+            <!-- Fim do form-group -->
+            
+
+          <!-- Inicio do  form-group -->
+          <div class="form-group">
+                <label for="IdContato">Selecione um contato</label>
+                <select class="form-control" id="IdContato">
+                  
+                </select>
+              </div>
+        <!-- Fim do form-group -->
+
+        <button type="submit" class="btn btn-primary" onclick="cadastrar();">Enviar</button>
+          </form>
+         
+
+
+
+
+        <!-- fim do formulario -->
+      </div>
+
+      <!-- fim do container-fluid -->
+
+
+
+      <!-- script para acesso a api -->
+      <script type="text/javascript">
+      function carrega(){
+          carregarUsuarios();
+          carregarContatos();
+      }
+      function carregarUsuarios(){
+          var url = "http://localhost:5000/api/usuario"; /*utilizar a url*/      
+          var xhr = new XMLHttpRequest();           /*requisição para o HTML*/
+          xhr.open("GET",url,true);             /* abrir e pegar pela url*/
+          var usuario = document.getElementById("IdUsuario");   /*criar uma variavel pelo id lá de cima "IdUsuario" */
+          xhr.onload=function(){
+                    var json = JSON.parse(this.response); /* criar var json e pede para responder */
+                    if(xhr.status >= 200 && xhr.status < 400){
+                        json.forEach(dados =>{
+                            var option = document.createElement("option"); /* cria var option e cria o elemento*/
+                                option.value = dados.id;
+                                option.text = dados.nomeUsuario;
+                                /*add as options criadas no select */
+                                usuario.append(option);
+                        });
+                    }     
+          }
+          xhr.send();
+      }
+
+
+      function carregarContatos(){
+          var url = "http://localhost:5000/api/contato"; /*utilizar a url*/      
+          var xhr = new XMLHttpRequest();           /*requisição para o HTML*/
+          xhr.open("GET",url,true);             /* abrir e pegar pela url*/
+          var contato = document.getElementById("IdContato");   /*criar uma variavel pelo id lá de cima "IdUsuario" */
+          xhr.onload=function(){
+                    var json = JSON.parse(this.response); /* criar var json e pede para responder */
+                    if(xhr.status >= 200 && xhr.status < 400){
+                        json.forEach(dados =>{
+                            var option = document.createElement("option"); /* cria var option e cria o elemento*/
+                                option.value = dados.id;
+                                option.text = dados.email;
+                                /*add as options criadas no select */
+                                contato.append(option);
+                        });
+                    }     
+          }
+          xhr.send();
+      }
+            function cadastrar(){
+                var url = "http://localhost:5000/api/cliente";
+                //vamos pegar os dados do usuario
+                var nome = document.getElementById("NomeCliente").value;
+                var cpf = document.getElementById("CPF").value;
+                var idUsuario = document.getElementById("IdUsuario").value;
+                var idContato = document.getElementById("IdContato").value;
+                //vamos "casar" os campos da api com os valores do formulario
+                var dados = {};
+                dados.nomeCliente = nome; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+                dados.cpf = cpf;
+                dados.idUsuario = idUsuario;
+                dados.idContato = idContato;
+                
+                //abaixo iremos passar para o formato de JSON
+                var json = JSON.stringify(dados);
+
+                //document.getelement é para utilizar um dados pelo ID
+
+                //vamos fazer uma instancia do obj XMLHttpRequest
+
+                var xhr = new XMLHttpRequest();
+
+                /*
+                vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+                */
+                xhr.open("POST",url,true);
+
+                //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+                
+                xhr.setRequestHeader("Content-type","application/json;charset=utf-8"); //como o dados é interpretado para a api/postman
+
+                xhr.onload = function (){
+                    if(xhr.status >= 200 && xhr.status < 400){
+                        alert("Dados cadastrados");
+                        console.log(xhr);
+                    }
+                    else{
+                        alert("Erro ao tentar cadastrar");
+                    }
+                }
+                xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+
+            }
+
+      </script>
+        <!-- fim do acesso para a api -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

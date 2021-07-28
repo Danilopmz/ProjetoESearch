@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <title>CD USER</title>
+  </head>
+  <style>
+    body{
+        padding: 1rem;
+        margin: 1rem 1rem 1rem 1rem;
+        background-color: black;
+        text-align: center;
+        color: whitesmoke;
+    }
+</style>
+
+  <body>
+    <h1>Cadastro de Usuário</h1>
+
+    <hr>
+    
+    <div class="container-fluid">
+        <!-- inicio do formulario  -->
+        <form onsubmit="return false;">
+            <div class="form-group">
+              <label for="usuario">Nome de Usuário </label>
+              <input type="text" class="form-control" id="usuario" aria-describedby="emailHelp" placeholder="Digite seu Usuário">
+              <!-- <small id="emailHelp" class="form-text text-muted">Nunca compartilhe seu email.</small> -->
+            </div>
+            <div class="form-group">
+              <label for="senha">Senha</label>
+              <input type="password" class="form-control" id="senha" placeholder="Digite sua Senha">
+            </div>
+
+            <!-- Inicio select -->
+            <div class="form-group">
+                <label for="nivel">Selecione um nível</label>
+                <select class="form-control" id="nivel">
+                  <option value="Cliente">Cliente</option>
+                  <!-- <option value="Funcionário">Funcionário</option>
+                  <option value="Gerente">Gerente</option>
+                  <option value="Admin">Administrador</option> -->
+                </select>
+              </div>
+              
+            </form>
+            <!-- Final select  -->
+
+
+            <!-- <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Checar</label>
+            </div> -->
+            <button type="submit" class="btn btn-primary" onclick="cadastrar();">Enviar</button>
+          </form>
+          <!-- fim do formulario -->
+      </div>
+      <!-- Fim do DIV -->
+
+    
+        <!-- Incio do script para cadastro do usuario  -->
+
+        <script type="text/javascript">
+            function cadastrar(){
+                var url = "http://localhost:5000/api/usuario";
+                //vamos pegar os dados do usuario
+                var usuario = document.getElementById("usuario").value;
+                var senha = document.getElementById("senha").value;
+                var nivel = document.getElementById("nivel").value;
+                //vamos "casar" os campos da api com os valores do formulario
+                var dados = {};
+                dados.nomeUsuario = usuario; // nomeUsuario sera a usuario deste javascript, poderia ser com o getelement tambem.
+                dados.senha = senha;
+                dados.nivel = nivel;
+                
+                //abaixo iremos passar para o formato de JSON
+                var json = JSON.stringify(dados);
+
+                //document.getelement é para utilizar um dados pelo ID
+
+                //vamos fazer uma instancia do obj XMLHttpRequest
+
+                var xhr = new XMLHttpRequest();
+
+                /*
+                vamos expor a url com o comando open e passar o verbo do rest(POST), a url da api e se aceita retorno ou não(true)
+                */
+                xhr.open("POST",url,true);
+
+                //vamos dizer como sera a passagem dos dados para a api, neste caso iremos usar JSON
+                
+                xhr.setRequestHeader("Content-type","application/json;charset=utf-8"); //como o dados é interpretado para a api/postman
+
+                xhr.onload = function (){
+                    if(xhr.status >= 200 && xhr.status < 400){
+                        alert("Dados cadastrados");
+                        console.log(xhr);
+                    }
+                    else{
+                        alert("Erro ao tentar cadastrar");
+                    }
+                }
+                xhr.send(json); //estou utilizando a var json lá de cima para dar o send
+
+            }
+        </script>
+
+
+
+
+
+        <!-- fim do script de cadastro -->
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

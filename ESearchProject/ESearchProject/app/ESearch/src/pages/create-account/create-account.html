@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        Ionic Rest Api Example
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <h1 text-center>Exemplo de criação de conta</h1>
+  
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Nome do Evento</ion-label>
+        <ion-input type="text" name="name" [(ngModel)]="model.name"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label stacked>CEP</ion-label>
+        <ion-input type="text" name="address" [(ngModel)]="model.address"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+        <ion-label stacked>Rua</ion-label>
+        <ion-input type="text" name="rua" [(ngModel)]="model.rua"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Data</ion-label>
+          <ion-input type="text" name="data" [(ngModel)]="model.data"></ion-input>
+        </ion-item>
+              
+      <ion-item>
+          <ion-label stacked>Inicio</ion-label>
+          <ion-input type="text" name="inicio" [(ngModel)]="model.inicio"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+            <ion-label stacked>Termino</ion-label>
+            <ion-input type="text" name="termino" [(ngModel)]="model.termino"></ion-input>
+          </ion-item>
+            
+          <ion-item>
+              <ion-label stacked>Descrição</ion-label>
+              <ion-input type="text" name="type" [(ngModel)]="model.type"></ion-input>
+            </ion-item>
+                    
+        <ion-item>
+            <ion-label stacked>Preço</ion-label>
+            <ion-input type="text" name="preco" [(ngModel)]="model.preco"></ion-input>
+          </ion-item>
+  
+        
+  
+    
+  
+    <button ion-button block (click)="createEvent()" color="primary">Criar conta</button>
+  
+  </ion-content>
